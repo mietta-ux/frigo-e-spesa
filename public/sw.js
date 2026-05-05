@@ -1,14 +1,14 @@
-const CACHE_NAME = 'fridgechef-v1';
+const CACHE_NAME = 'fridgechef-v2';
+const BASE = '/frigo-e-spesa/';
+
 const ASSETS_TO_CACHE = [
-  '/',
-  '/index.html',
-  '/src/main.js',
-  '/src/style.css',
-  '/src/recipes.js',
-  '/bg.png',
-  '/icon-192.png',
-  '/icon-512.png',
-  '/manifest.json'
+  BASE,
+  BASE + 'index.html',
+  BASE + 'bg.png',
+  BASE + 'icon-180.png',
+  BASE + 'icon-192.png',
+  BASE + 'icon-512.png',
+  BASE + 'manifest.json'
 ];
 
 // Install: cache essential assets
@@ -35,7 +35,7 @@ self.addEventListener('activate', (event) => {
   self.clients.claim();
 });
 
-// Fetch: cache-first strategy for assets, network-first for pages
+// Fetch: cache-first for assets, network-first for navigation
 self.addEventListener('fetch', (event) => {
   event.respondWith(
     caches.match(event.request).then((cachedResponse) => {
@@ -43,7 +43,6 @@ self.addEventListener('fetch', (event) => {
         return cachedResponse;
       }
       return fetch(event.request).then((response) => {
-        // Don't cache non-successful responses or non-GET requests
         if (!response || response.status !== 200 || event.request.method !== 'GET') {
           return response;
         }
@@ -54,9 +53,8 @@ self.addEventListener('fetch', (event) => {
         return response;
       });
     }).catch(() => {
-      // Fallback for navigation requests when offline
       if (event.request.mode === 'navigate') {
-        return caches.match('/index.html');
+        return caches.match(BASE + 'index.html');
       }
     })
   );
