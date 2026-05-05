@@ -14,9 +14,10 @@
     <meta name="mobile-web-app-capable" content="yes">
 
     <!-- Icons -->
-    <link rel="icon" type="image/png" sizes="512x512" href="/icon-512.png">
-    <link rel="apple-touch-icon" href="/icon-180.png">
-    <link rel="manifest" href="/manifest.json">
+    <link rel="icon" type="image/png" sizes="512x512" href="/frigo-e-spesa/icon-512.png">
+    <link rel="apple-touch-icon" href="/frigo-e-spesa/icon-180.png">
+    <link rel="manifest" href="/frigo-e-spesa/manifest.json">
+    <link rel="apple-touch-startup-image" href="/frigo-e-spesa/icon-512.png">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -140,15 +141,6 @@
 
     </div>
     <script type="module" src="/src/main.js"></script>
-    <script>
-      // Register Service Worker for PWA
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-          navigator.serviceWorker.register('/sw.js')
-            .then((reg) => console.log('SW registered:', reg.scope))
-            .catch((err) => console.log('SW registration failed:', err));
-        });
-      }
-    </script>
+    <!-- PWA Service Worker handled by vite-plugin-pwa -->
   </body>
 </html>
